@@ -26,7 +26,7 @@ const Profile = () => {
           />
         </div>
         <div className="profile-data">
-          <h1>Pia Dudhat</h1>
+          <h1>{JSON.parse(localStorage.getItem("user")).name}</h1>
           <div className="profile-info">
             <p>40 posts</p>
             <p>40 folowwers</p>

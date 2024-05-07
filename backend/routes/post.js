@@ -54,4 +54,35 @@ routs.get("/mypost",requireLogin,async(req,res)=>{
         return res.status(400).json({message: 'Something Wrong !',status:0})
     }
 })
+
+routs.put("/like",requireLogin,async(req,res)=>{
+    try {
+        let data = await Post.findByIdAndUpdate(req.body.postId, {
+            $push: { likes: req.user._id }
+        }, {
+            new: true
+        }).exec();
+        res.json(data);
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({ message: 'Something Wrong !', status: 0 });
+    }
+    
+})
+
+routs.put("/unlike",requireLogin,async(req,res)=>{
+    try {
+        let data = await Post.findByIdAndUpdate(req.body.postId, {
+            $pull: { likes: req.user._id }
+        }, {
+            new: true
+        }).exec();
+        res.json(data);
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({ message: 'Something Wrong !', status: 0 });
+    }
+    
+})
+
 module.exports=routs;

@@ -26,10 +26,53 @@ const Home = () => {
       .catch((error) => console.log(error));
   }, []);
 
+// likepost
+const likePost = (id) => {
+  fetch("http://localhost:5000/post/like", {
+    method: "put",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("jwt"),
+    },
+    body: JSON.stringify({
+      postId: id,
+    }),
+  })
+    .then((res) => res.json())
+    .then((updatedPost) => {
+      const updatedData = data.map((post) =>
+        post._id === updatedPost._id ? updatedPost : post
+      );
+      setData(updatedData);
+    })
+    .catch((err) => console.log(err));
+};
+
+// unlikepost
+const unlikePost = (id) => {
+  fetch("http://localhost:5000/post/unlike", {
+    method: "put",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("jwt"),
+    },
+    body: JSON.stringify({
+      postId: id,
+    }),
+  })
+    .then((res) => res.json())
+    .then((updatedPost) => {
+      const updatedData = data.map((post) =>
+        post._id === updatedPost._id ? updatedPost : post
+      );
+      setData(updatedData);
+    })
+    .catch((err) => console.log(err));
+};
   return (
     <div className="home">
       {/* card */}
-      {Array.isArray(data) && data?.map((post, index) => (
+      {data.map((post, index) => (
         <div key={index} className="card">
           {/* card-header */}
           <div className="card-header">
@@ -47,8 +90,12 @@ const Home = () => {
           </div>
           {/* card content */}
           <div className="card-content">
-            <span className="material-symbols-outlined">favorite</span>
-            <p>1 Like</p>
+            {
+              post.likes.includes(JSON.parse(localStorage.getItem("user"))._id)?(<span className="material-symbols-outlined material-symbols-outlined-red" onClick={()=>unlikePost(post._id)}>favorite</span>
+            ):(<span className="material-symbols-outlined" onClick={()=>likePost(post._id)}>favorite</span>
+          )
+            }
+            <p>{post.likes.length} Likes</p>
             <p>{post.body}</p>
           </div>
           {/* add_comment */}

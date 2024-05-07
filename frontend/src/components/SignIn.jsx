@@ -53,6 +53,7 @@ const {setUserLogin}=useContext(LoginContext)
           notyfyB(data.message);
           console.log(data)
           localStorage.setItem("jwt",data.token)
+          localStorage.setItem("user",JSON.stringify(data.user))
           setUserLogin(true)
           navigate('/')
         }

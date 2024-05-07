@@ -46,7 +46,8 @@ routs.post('/signin',async(req,res)=>{
                 let checkPassword=await bcrypt.compare(password,checkEmail.password);
                 if(checkPassword){
                     var token=jwt.sign({_id:checkEmail.id},process.env.JWT_SECRET,{expiresIn:'1h'})
-                    return res.status(200).json({message:'user login successfully',status:1,data:checkEmail,token:token});
+                    const {_id,name,email,username}=checkEmail;
+                    return res.status(200).json({message:'user login successfully',status:1,data:checkEmail,token:token,user:{_id,name,email,username}});
                 }else{
                     return res.status(400).json({message:'Password Not Match',status:0});
                 }

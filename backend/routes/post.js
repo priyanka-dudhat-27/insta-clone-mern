@@ -40,4 +40,18 @@ routs.get('/allposts',requireLogin,async(req,res)=>{
         return res.status(400).json({message: 'Something Wrong !',status:0})
     }
 })
+
+routs.get("/mypost",requireLogin,async(req,res)=>{
+    try {
+        let postData=await Post.find({postedBy:req.user._id}).populate("postedBy","_id username")
+        if(postData){
+            return res.status(200).json({data:postData})
+        }else{
+            return res.status(400).json({message: 'Data not found !',status:0})
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({message: 'Something Wrong !',status:0})
+    }
+})
 module.exports=routs;

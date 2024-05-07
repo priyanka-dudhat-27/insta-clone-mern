@@ -1,8 +1,19 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React,{useState,useEffect} from "react";
 import './Profile.css'
 
 const Profile = () => {
+  const [data,setData]=useState([])
+  useEffect(()=>{
+    fetch("http://localhost:5000/post/mypost",{
+      headers:{
+        Authorization:"Bearer "+localStorage.getItem("jwt")
+      }
+    })
+    .then((res)=>res.json())
+    .then((data)=>setData(data.data))
+    .catch((error)=>console.log(error))
+  },[])
   return (
     <div className="profile">
       {/* profile-frame */}
@@ -26,30 +37,15 @@ const Profile = () => {
       <hr style={{width:"90%",opacity:"0.8",margin:"25px auto"}}/>
       {/* gallery */}
       <div className="gallery">
-      <img
-          src="https://tse1.mm.bing.net/th?id=OIP.y-nGyqT5AwES8oqp344z4gHaHa&pid=Api&P=0&h=180"
-            alt=""
-          />
-          <img
-          src="https://tse1.mm.bing.net/th?id=OIP.y-nGyqT5AwES8oqp344z4gHaHa&pid=Api&P=0&h=180"
-            alt=""
-          />
-          <img
-          src="https://tse1.mm.bing.net/th?id=OIP.y-nGyqT5AwES8oqp344z4gHaHa&pid=Api&P=0&h=180"
-            alt=""
-          />
-          <img
-          src="https://tse1.mm.bing.net/th?id=OIP.y-nGyqT5AwES8oqp344z4gHaHa&pid=Api&P=0&h=180"
-            alt=""
-          />
-          <img
-          src="https://tse1.mm.bing.net/th?id=OIP.y-nGyqT5AwES8oqp344z4gHaHa&pid=Api&P=0&h=180"
-            alt=""
-          />
-          <img
-          src="https://tse1.mm.bing.net/th?id=OIP.y-nGyqT5AwES8oqp344z4gHaHa&pid=Api&P=0&h=180"
-            alt=""
-          />
+      {
+        data.map((item)=>{
+          return(
+            <>
+            <img key={item._id} src={item.image} alt="" className="gallery-image"/>
+            </>
+          )
+        })
+      }
       </div>
     </div>
   );

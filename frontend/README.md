@@ -21,3 +21,5 @@ Currently, two official plugins are available:
 -create post image upload with cloudinary
 -set navbar nav-menu item with condition for show on ui
 -v-11 usecontext error(leave it)
+-error in comments
+-error in profile followers/following

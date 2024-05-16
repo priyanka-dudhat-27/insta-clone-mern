@@ -16,7 +16,15 @@ const userSchema=mongoose.Schema({
     password:{
         type:String,
         required:true
-    }
+    },
+    followers:[{
+        type:mongoose.Types.ObjectId,
+        ref:'User'
+    }],
+    following:[{
+        type:mongoose.Types.ObjectId,
+        ref:'User'
+    }]
 })
 
 const User=mongoose.model('User',userSchema);

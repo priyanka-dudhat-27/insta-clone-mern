@@ -31,3 +31,8 @@ module.exports=async(req,res,next)=>{
     })
 
 }
+
+module.exports.isAdmin=async(req,res,next)=>{
+    let userData=await User.find()
+    console.log(userData)
+}

@@ -1,9 +1,21 @@
 /* eslint-disable no-unused-vars */
 import React,{useState,useEffect} from "react";
 import './Profile.css'
-
+import PostDetails from "./PostDetails"
 const Profile = () => {
   const [data,setData]=useState([])
+  const [show,setShow]=useState(false)
+  const [posts,setPosts]=useState([])
+
+  const toggleComments=(posts)=>{
+    if(show){
+      setShow(false)
+    }else{
+      setShow(true)
+      setPosts(posts)
+    }
+  }
+
   useEffect(()=>{
     fetch("http://localhost:5000/post/mypost",{
       headers:{
@@ -28,9 +40,9 @@ const Profile = () => {
         <div className="profile-data">
           <h1>{JSON.parse(localStorage.getItem("user")).name}</h1>
           <div className="profile-info">
-            <p>40 posts</p>
+            <p>{data.length} posts</p>
             <p>40 folowwers</p>
-            <p>40 following</p>
+            <p>40  following</p>
           </div>
         </div>
       </div>
@@ -38,15 +50,18 @@ const Profile = () => {
       {/* gallery */}
       <div className="gallery">
       {
-        data.map((item)=>{
+        data.map((pics)=>{
           return(
             <>
-            <img key={item._id} src={item.image} alt="" className="gallery-image"/>
+            <img key={pics._id} src={pics.image} alt="" className="gallery-image" onClick={()=>{toggleComments(pics)}}/>
             </>
           )
         })
       }
       </div>
+      {/* {
+        show && <PostDetails  item={posts}/>
+      } */}
     </div>
   );
 };

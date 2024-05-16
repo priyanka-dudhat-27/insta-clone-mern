@@ -13,6 +13,7 @@ import CreatePost from './components/CreatePost'
 import { LoginContext } from './context/ContextLogin'
 import Modal from './components/Modal'
 import UserProfile from './components/UserProfile'
+import MyFollowingPost from './components/MyFollowingPost'
 
 const App = () => {
   const [userLogin,setUserLogin]=useState(false);
@@ -29,6 +30,7 @@ const App = () => {
         <Route exact path='/profile' element={<Profile/>}></Route>
         <Route path='/createpost' element={<CreatePost/>}></Route>
         <Route path='/user/:userid' element={<UserProfile/>}></Route>
+        <Route path='/post/myfollowingpost' element={<MyFollowingPost/>}></Route>
       </Routes>
       <ToastContainer theme="dark" />
       { openModal && <Modal setOpenModal={setOpenModal}></Modal>}

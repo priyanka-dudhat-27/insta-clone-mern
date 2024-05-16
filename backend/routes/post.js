@@ -145,6 +145,18 @@ routs.delete("/deletepost/:postId",requireLogin,async(req,res)=>{
   }
 })
 
+// to show following posts
+routs.get("/myfollowingpost",requireLogin,async(req,res)=>{
+  try {
+    let postData=await Post.find({postedBy:{$in:req.user.following}})
+    .populate("postedBy","_id username")
+    .populate("comments.postedBy","_id username")
+    .then((posts)=>res.json(posts))
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ message: "Something Wrong !", status: 0 });
+  }
+})
 
 module.exports = routs;
 

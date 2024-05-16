@@ -5,7 +5,7 @@ import "./Home.css";
 import { Link, useNavigate } from "react-router-dom";
 import {toast} from "react-toastify"
 
-const Home = () => {
+const MyFollowingPost = () => {
   
 
   const [data, setData] = useState([])
@@ -19,7 +19,9 @@ const Home = () => {
     if (!token) {
       navigate("/signup");
     }
-    fetch("http://localhost:5000/post/allposts", {
+
+    // fetching all post
+    fetch("http://localhost:5000/post/myfollowingpost", {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("jwt"),
@@ -28,12 +30,10 @@ const Home = () => {
       .then((res) => res.json())
       .then((data) =>{
         console.log(data)
-        setData(data.data)
+        setData(data)
       })
       .catch((error) => console.log(error));
-  }, [navigate]);
-  
- 
+  }, []);
 
   // show & hide comments
   const toggleComments=(post)=>{
@@ -224,4 +224,4 @@ const makeComment = (text,id) => {
   );
 };
 
-export default Home;
+export default MyFollowingPost;

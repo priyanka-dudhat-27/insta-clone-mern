@@ -49,3 +49,16 @@
     transform: translateY(-5px);
     box-shadow: 0 10px 20px -10px #0115eb;
 }
+
+/* change profilepic */
+.changePic{
+    background-color: #fff;
+    padding:15px 80px
+}
+.upload-btn{
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-weight: bolder;
+    font-size: 15px;
+}

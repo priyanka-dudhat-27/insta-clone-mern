@@ -18,6 +18,7 @@ const CreatePost = () => {
     toast.success(message);
   };
 
+  // saving post to database
   useEffect(() => {
     if(url){
        // saving post to mongodb

@@ -28,7 +28,7 @@ const postDetails = (item) => {
                 return (
                   <div key={index}>
                   <p className="comm">
-                  <span className="commentor" style={{fontWeight:"bold"}}>{comment.postedBy.name}{""} </span>
+                  <span className="commentor" style={{fontWeight:"bold"}}>{comment.postedBy.username}{""} </span>
                   <span className="comment-text">{comment.comment}</span>
             </p></div>
                 )

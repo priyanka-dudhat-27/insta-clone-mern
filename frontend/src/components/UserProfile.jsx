@@ -5,6 +5,7 @@ import PostDetails from "./PostDetails";
 import { useParams } from "react-router-dom";
 const UserProfile = () => {
   // const [data,setData]=useState([])
+  var picLink = "https://cdn-icons-png.flaticon.com/128/11919/11919842.png";
   const { userid } = useParams();
   console.log(userid);
   const [user, setUser] = useState("");
@@ -83,7 +84,7 @@ const UserProfile = () => {
         {/* profile-pic */}
         <div className="profile-pic">
           <img
-            src="https://tse1.mm.bing.net/th?id=OIP.y-nGyqT5AwES8oqp344z4gHaHa&pid=Api&P=0&h=180"
+            src={user.photo ? user.photo : picLink}
             alt=""
           />
         </div>

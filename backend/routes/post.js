@@ -36,7 +36,7 @@ routs.post("/createPost", requireLogin, async (req, res) => {
 
 routs.get("/allposts", requireLogin, async (req, res) => {
   try {
-    let postData = await Post.find().populate("postedBy", "_id username").populate("comments.postedBy", "_id name");
+    let postData = await Post.find().populate("postedBy", "_id username photo").populate("comments.postedBy", "_id name").sort("-createdAt");
     if (postData) {
       return res.status(200).json({ data: postData });
     } else {
@@ -53,7 +53,7 @@ routs.get("/mypost", requireLogin, async (req, res) => {
     let postData = await Post.find({ postedBy: req.user._id }).populate(
       "postedBy",
       "_id username"
-    );
+    ).sort("-createdAt");
     if (postData) {
       return res.status(200).json({ data: postData });
     } else {
@@ -75,7 +75,7 @@ routs.put("/like", requireLogin, async (req, res) => {
       {
         new: true,
       }
-    ).populate("postedBy","_id username")
+    ).populate("postedBy","_id username photo")
     .exec();
     res.json(data);
   } catch (error) {
@@ -95,7 +95,7 @@ routs.put("/unlike", requireLogin, async (req, res) => {
       {
         new: true,
       }
-    ).populate("postedBy","_id username")
+    ).populate("postedBy","_id username photo")
     .exec();
     res.json(data);
   } catch (error) {
@@ -121,6 +121,7 @@ routs.put("/comment", requireLogin, async (req, res) => {
       }
     )
       .populate("comments.postedBy", "_id username image")
+      .populate("postedBy", "_id username photo")
       .exec();
     res.json(data);
   } catch (error) {

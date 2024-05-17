@@ -17,6 +17,10 @@ const userSchema=mongoose.Schema({
         type:String,
         required:true
     },
+    photo:{
+        type:String,
+        
+    },
     followers:[{
         type:mongoose.Types.ObjectId,
         ref:'User'

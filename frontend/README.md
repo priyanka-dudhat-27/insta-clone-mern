@@ -20,6 +20,11 @@ Currently, two official plugins are available:
 -requireLogin functionality with createpost using jwt 
 -create post image upload with cloudinary
 -set navbar nav-menu item with condition for show on ui
+-logout feature added
 -v-11 usecontext error(leave it)
--error in comments
--error in profile followers/following
+-like/unlike feature added
+-follow/unfollow feature added
+-my following feature added
+-upload profile pic functionality added (upload pic in cloudinary first,use useRef hook)
+
+

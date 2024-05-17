@@ -1,31 +1,40 @@
 /* eslint-disable no-unused-vars */
-import React,{useState,useEffect} from "react";
-import './Profile.css'
-import PostDetails from "./PostDetails"
+import { useEffect, useState } from "react"
+import Profilepic from '../components/Profilepic'
+
+/* eslint-disable react/jsx-no-undef */
 const Profile = () => {
-  const [data,setData]=useState([])
-  const [show,setShow]=useState(false)
-  const [posts,setPosts]=useState([])
+  var picLink = "https://cdn-icons-png.flaticon.com/128/11919/11919842.png";
+  const [data, setData] = useState([]);
+  const [show, setShow] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const [changepic, setChangepic] = useState(false);
+  const [user, setUser] = useState("");
 
-  const toggleComments=(posts)=>{
-    if(show){
-      setShow(false)
-    }else{
-      setShow(true)
-      setPosts(posts)
-    }
-  }
+  const changeProfile = () => {
+    setChangepic(!changepic);
+  };
 
-  useEffect(()=>{
-    fetch("http://localhost:5000/post/mypost",{
-      headers:{
-        Authorization:"Bearer "+localStorage.getItem("jwt")
+  const toggleComments = (posts) => {
+    setShow(!show);
+    setPosts(posts);
+  };
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/user/${JSON.parse(localStorage.getItem("user"))._id}`, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt")
       }
     })
-    .then((res)=>res.json())
-    .then((data)=>setData(data.data))
-    .catch((error)=>console.log(error))
-  },[])
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setData(data.postData);
+        setUser(data.userData);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
     <div className="profile">
       {/* profile-frame */}
@@ -33,35 +42,28 @@ const Profile = () => {
         {/* profile-pic */}
         <div className="profile-pic">
           <img
-          src="https://tse1.mm.bing.net/th?id=OIP.y-nGyqT5AwES8oqp344z4gHaHa&pid=Api&P=0&h=180"
+            onClick={changeProfile}
+            src={user.photo ? user.photo : picLink}
             alt=""
           />
         </div>
         <div className="profile-data">
           <h1>{JSON.parse(localStorage.getItem("user")).name}</h1>
           <div className="profile-info">
-            <p>{data.length} posts</p>
-            <p>40 folowwers</p>
-            <p>40  following</p>
+            <p>{data ? data.length : "0"} posts</p>
+            <p>{user ? user.followers.length : "0"} followers</p>
+            <p>{user ? user.following.length : "0"} following</p>
           </div>
         </div>
       </div>
-      <hr style={{width:"90%",opacity:"0.8",margin:"25px auto"}}/>
+      <hr style={{ width: "90%", opacity: "0.8", margin: "25px auto" }} />
       {/* gallery */}
       <div className="gallery">
-      {
-        data.map((pics)=>{
-          return(
-            <>
-            <img key={pics._id} src={pics.image} alt="" className="gallery-image" onClick={()=>{toggleComments(pics)}}/>
-            </>
-          )
-        })
-      }
+        {data.map((pics) => (
+          <img key={pics._id} src={pics.image} alt="" className="gallery-image" onClick={() => { toggleComments(pics) }} />
+        ))}
       </div>
-      {/* {
-        show && <PostDetails  item={posts}/>
-      } */}
+      {changepic && <Profilepic changeProfile={changeProfile} />}
     </div>
   );
 };

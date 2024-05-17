@@ -58,4 +58,19 @@ routes.put("/unfollow", requireLogin, async (req, res) => {
     }
 });
 
+// to upload profile pic
+routes.put("/uploadProfilePic", requireLogin, async (req, res) => {
+    try {
+        const userData = await User.findByIdAndUpdate(req.user._id,{ 
+            $set: { photo: req.body.pic } 
+        },{ 
+            new: true
+        }).exec();
+
+        res.json(userData);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ message: 'Something went wrong', status: 0 });
+    }
+});
 module.exports = routes;

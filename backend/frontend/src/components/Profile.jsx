@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react"
-import Profilepic from '../components/Profilepic'
+import Profilepic from './Profilepic'
 
 /* eslint-disable react/jsx-no-undef */
 const Profile = () => {
@@ -21,7 +21,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:5000/user/${JSON.parse(localStorage.getItem("user"))._id}`, {
+    fetch(`/user/${JSON.parse(localStorage.getItem("user"))._id}`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt")
       }

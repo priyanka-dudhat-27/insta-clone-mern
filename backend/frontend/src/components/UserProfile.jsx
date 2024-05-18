@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import "./Profile.css";
+import "../css/Profile.css";
 import PostDetails from "./PostDetails";
 import { useParams } from "react-router-dom";
 const UserProfile = () => {
@@ -22,7 +22,7 @@ const UserProfile = () => {
   //   }
 
   const followUser=(userId)=>{
-    fetch("http://localhost:5000/user/follow",{
+    fetch("/user/follow",{
       method:"put",
       headers:{
         "Content-Type":"application/json",
@@ -42,7 +42,7 @@ const UserProfile = () => {
 
   // tounfollow user
   const unfollowUser=(userId)=>{
-    fetch("http://localhost:5000/user/unfollow",{
+    fetch("/user/unfollow",{
       method:"put",
       headers:{
         "Content-Type":"application/json",
@@ -61,7 +61,7 @@ const UserProfile = () => {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:5000/user/${userid}`, {
+    fetch(`/user/${userid}`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },

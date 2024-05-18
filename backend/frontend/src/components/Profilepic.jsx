@@ -32,7 +32,7 @@ const Profilepic = ({ changeProfile }) => {
 
     const postPic=()=>{
         // saving post to mongodb
-        fetch("http://localhost:5000/user/uploadProfilePic",{
+        fetch("/user/uploadProfilePic",{
           method:"put",
           headers:{
             "Content-Type":"application/json",
@@ -88,7 +88,10 @@ const Profilepic = ({ changeProfile }) => {
           />
         </div>
         <div style={{ borderTop: "1px solid #00000030" }}>
-          <button className="upload-btn" style={{ color: "#ED4956" }}>
+          <button className="upload-btn" style={{ color: "#ED4956" }} onClick={()=>{
+            setUrl(null);
+            postPic();
+          }}>
             Remove Current Photo
           </button>
         </div>

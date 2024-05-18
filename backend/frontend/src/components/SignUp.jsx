@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import logo from "/images/insta-logo.png";
 import { Link ,useNavigate} from "react-router-dom";
-import "./SignUp.css";
+import "../css/SignUp.css";
 import { toast } from 'react-toastify';
 
 
@@ -34,7 +34,7 @@ const SignUp = () => {
       return
     }
     // sending data to server
-    fetch("http://localhost:5000/signup", {
+    fetch("/signup", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'

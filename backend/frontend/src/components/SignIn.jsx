@@ -1,22 +1,18 @@
 /* eslint-disable no-useless-escape */
-/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
-import React, { useState,useContext } from "react";
-import "./SignIn.css";
+/* eslint-disable react/no-unescaped-entities */
+import React, { useState, useContext } from "react";
+import "../css/SignIn.css";
 import logo from "/images/insta-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { LoginContext } from "../context/ContextLogin";
 
 const SignIn = () => {
-const {setUserLogin}=useContext(LoginContext)
+  const { setUserLogin } = useContext(LoginContext);
   const navigate = useNavigate();
-  const notyfyA = (message) => {
-    toast.error(message);
-  };
-  const notyfyB = (message) => {
-    toast.success(message);
-  };
+  const notifyA = (message) => toast.error(message);
+  const notifyB = (message) => toast.success(message);
   const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
   const [email, setEmail] = useState("");
@@ -24,43 +20,39 @@ const {setUserLogin}=useContext(LoginContext)
 
   const postData = () => {
     if (!emailRegEx.test(email)) {
-      notyfyA("Please enter a valid email");
+      notifyA("Please enter a valid email");
       return;
     }
     if (!password) {
-      notyfyA("Please enter your password");
+      notifyA("Please enter your password");
       return;
     }
 
-    // sending data to server
-    fetch("http://localhost:5000/signin", {
-      method: "post",
+    // Sending data to server
+    fetch("/signin", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
+      body: JSON.stringify({ email, password }),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("data"+JSON.stringify(data))
+        console.log("data", JSON.stringify(data));
         if (data.error) {
-          notyfyA(data.error);
+          notifyA(data.error);
           return;
-        }else{
-          notyfyB(data.message);
-          console.log(data)
-          localStorage.setItem("jwt",data.token)
-          localStorage.setItem("user",JSON.stringify(data.user))
-          setUserLogin(true)
-          navigate('/')
+        } else {
+          notifyB(data.message);
+          localStorage.setItem("jwt", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+          setUserLogin(true);
+          navigate("/");
         }
       })
       .catch((error) => {
-        console.error(error);
-        notyfyA("An error occurred. Please try again later.");
+        console.error("Fetch error:", error);
+        notifyA("An error occurred. Please try again later.");
       });
   };
 
@@ -74,9 +66,7 @@ const {setUserLogin}=useContext(LoginContext)
             name="email"
             id="email"
             value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
           />
         </div>
@@ -86,16 +76,14 @@ const {setUserLogin}=useContext(LoginContext)
             name="password"
             id="password"
             value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            placeholder="password"
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
           />
         </div>
         <input type="submit" id="login-btn" value="Log In" onClick={postData} />
       </div>
       <div className="loginForm2">
-        Don't have an accout?
+        Don't have an account?
         <Link to="/signup">
           <span style={{ color: "blue", cursor: "pointer" }}>Sign Up</span>
         </Link>

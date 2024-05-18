@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import "./Home.css";
+import "../css/Home.css";
 import { Link, useNavigate } from "react-router-dom";
 import {toast} from "react-toastify"
 
@@ -21,7 +21,7 @@ const MyFollowingPost = () => {
     }
 
     // fetching all post
-    fetch("http://localhost:5000/post/myfollowingpost", {
+    fetch("/post/myfollowingpost", {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("jwt"),
@@ -48,7 +48,7 @@ const MyFollowingPost = () => {
 
   // likepost
 const likePost = (id) => {
-  fetch("http://localhost:5000/post/like", {
+  fetch("/post/like", {
     method: "put",
     headers: {
       "Content-Type": "application/json",
@@ -71,7 +71,7 @@ const likePost = (id) => {
 
 // unlikepost
 const unlikePost = (id) => {
-  fetch("http://localhost:5000/post/unlike", {
+  fetch("/post/unlike", {
     method: "put",
     headers: {
       "Content-Type": "application/json",
@@ -95,7 +95,7 @@ const unlikePost = (id) => {
 
 // function to make comment
 const makeComment = (text,id) => {
-  fetch("http://localhost:5000/post/comment", {
+  fetch("/post/comment", {
     method: "put",
     headers: {
       "Content-Type": "application/json",

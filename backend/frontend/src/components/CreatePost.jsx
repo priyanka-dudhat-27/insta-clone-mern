@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import React, { useState ,useEffect} from "react";
-import "./CreatePost.css";
+import "../css/CreatePost.css";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -22,7 +22,7 @@ const CreatePost = () => {
   useEffect(() => {
     if(url){
        // saving post to mongodb
-    fetch("http://localhost:5000/post/createPost",{
+    fetch("/post/createPost",{
       method:"post",
       headers:{
         "Content-Type":"application/json",

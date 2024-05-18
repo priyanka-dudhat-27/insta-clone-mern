@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import './Modal.css'
+import '../css/Modal.css'
 import { RiCloseLine } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
 

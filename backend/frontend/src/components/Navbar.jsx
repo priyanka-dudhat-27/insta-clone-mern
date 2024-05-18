@@ -1,13 +1,17 @@
+/* eslint-disable no-undef */
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React,{useContext} from 'react'
 import logo from '/images/insta-logo.png'
-import './Navbar.css'
-import { Link } from 'react-router-dom'
+import '../css/Navbar.css'
+import { Link ,useNavigate} from 'react-router-dom'
 import { LoginContext } from '../context/ContextLogin'
 
 const Navber = ({login}) => {
   const {setOpenModal} =useContext(LoginContext)
+  const navigate=useNavigate();
+
   const loginStatus=()=>{
     const token=localStorage.getItem('jwt');
     if(token || login){
@@ -32,7 +36,7 @@ const Navber = ({login}) => {
   }
   return (
     <div className='navbar'>
-        <img src={logo} alt="logo" />
+        <img src={logo} alt="logo" onClick={()=>{navigate("/")}} />
         <ul className='nav-menu'>
            {
             loginStatus()

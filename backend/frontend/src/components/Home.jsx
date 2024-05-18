@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import "./Home.css";
+import "../css/Home.css";
 import { Link, useNavigate } from "react-router-dom";
 import {Navigate} from 'react-router-dom'
 import { toast } from "react-toastify";
@@ -19,7 +19,7 @@ const Home = () => {
     if (!token) {
       return <Navigate to="/signin"/>
     }
-    fetch("http://localhost:5000/post/allposts", {
+    fetch("/post/allposts", {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("jwt"),
@@ -44,7 +44,7 @@ const Home = () => {
   };
 
   const likePost = (id) => {
-    fetch("http://localhost:5000/post/like", {
+    fetch("/post/like", {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +66,7 @@ const Home = () => {
   };
 
   const unlikePost = (id) => {
-    fetch("http://localhost:5000/post/unlike", {
+    fetch("/post/unlike", {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -88,7 +88,7 @@ const Home = () => {
   };
 
   const makeComment = (text, id) => {
-    fetch("http://localhost:5000/post/comment", {
+    fetch("/post/comment", {
       method: "put",
       headers: {
         "Content-Type": "application/json",

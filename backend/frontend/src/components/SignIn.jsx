@@ -39,8 +39,8 @@ const SignIn = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log("data", JSON.stringify(data));
-        if (data.error) {
-          notifyA(data.error);
+        if (data.status === 0) {
+          notifyA(data.message);
           return;
         } else {
           notifyB(data.message);

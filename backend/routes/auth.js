@@ -30,32 +30,43 @@ routs.post('/signup',async(req,res)=>{
     }
 })
 
-routs.post('/signin',async(req,res)=>{
+routs.post('/signin', async (req, res) => {
     try {
-        const {email,password}=req.body;
-        if(!email || !password){
-            return res.status(400).json({message:'please enter all fields',status:0});
-        }else{
-            let checkEmail = await User.findOne({email:email});
-            // console.log(checkemail)
-            if(checkEmail){
-                let checkPassword=await bcrypt.compare(password,checkEmail.password);
-                if(checkPassword){
-                    var token=jwt.sign({_id:checkEmail.id},process.env.JWT_SECRET,{expiresIn:'24h'})
-                    const {_id,name,email,username}=checkEmail;
-                    return res.status(200).json({message:'user login successfully',status:1,data:checkEmail,token:token,user:{_id,name,email,username}});
-                }else{
-                    return res.status(400).json({message:'Password Not Match',status:0});
-                }
-            }else{
-                return res.status(400).json({message:'User Not Found',status:0});
-            }
+        const { email, password } = req.body;
+        
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Please enter all fields', status: 0 });
         }
+
+        const checkEmail = await User.findOne({ email: email });
+        
+        if (!checkEmail) {
+            return res.status(400).json({ message: 'User Not Found', status: 0 });
+        }
+
+        const checkPassword = await bcrypt.compare(password, checkEmail.password);
+        
+        if (!checkPassword) {
+            return res.status(400).json({ message: 'Password Not Match', status: 0 });
+        }
+
+        const token = jwt.sign({ _id: checkEmail.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+        const { _id, name, username } = checkEmail;
+
+        return res.status(200).json({
+            message: 'User login successfully',
+            status: 1,
+            data: checkEmail,
+            token: token,
+            user: { _id, name, email, username }
+        });
+
     } catch (error) {
         console.log(error);
-        res.status(400).json({message:'Something Wrong',status:0});
+        return res.status(500).json({ message: 'Something Wrong', status: 0 });
     }
-})
+});
+
 
 // google auth api
 routs.post("/googleLogin",async(req,res)=>{

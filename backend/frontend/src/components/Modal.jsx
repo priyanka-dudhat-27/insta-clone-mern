@@ -25,6 +25,7 @@ const Modal = ({ setOpenModal }) => { // Destructure setOpenModal from props
                 <button className='logoutBtn' onClick={()=>{
                     setOpenModal(false);
                     localStorage.clear();
+                    window.location.reload();
                     navigate("/signin")
                 }}>Logout</button>
                 <button className='cancelBtn'>Cancel</button>

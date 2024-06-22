@@ -17,7 +17,9 @@ const Home = () => {
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (!token) {
-      return <Navigate to="/signin"/>
+      // return <Navigate to="/signin"/>
+      navigate("/signin")
+      return
     }
     fetch("/post/allposts", {
       headers: {

@@ -57,4 +57,12 @@ routs.post('/signin',async(req,res)=>{
     }
 })
 
+// google auth api
+routs.post("/googleLogin",async(req,res)=>{
+    const {email_verified,email,name,clientId,username,photo}=req.body;
+    if(email_verified){
+        
+    }
+})
+
 module.exports=routs;

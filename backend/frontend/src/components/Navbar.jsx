@@ -8,12 +8,13 @@ import '../css/Navbar.css'
 import { Link ,useNavigate} from 'react-router-dom'
 import { LoginContext } from '../context/ContextLogin'
 
-const Navber = ({login}) => {
+const Navbar = ({login}) => {
   const {setOpenModal} =useContext(LoginContext)
   const navigate=useNavigate();
 
   const loginStatus=()=>{
     const token=localStorage.getItem('jwt');
+    
     if(token || login){
       return [
         <>
@@ -36,7 +37,7 @@ const Navber = ({login}) => {
   }
   return (
     <div className='navbar'>
-        <img src={logo} alt="logo" onClick={()=>{navigate("/")}} />
+        <img src={logo} alt="logo" onClick={()=>{navigate("/signin")}} />
         <ul className='nav-menu'>
            {
             loginStatus()
@@ -46,4 +47,4 @@ const Navber = ({login}) => {
   )
 }
 
-export default Navber
+export default Navbar

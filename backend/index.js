@@ -6,13 +6,12 @@ const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
 const User = require('./models/userModel');
-const morgan = require('morgan');
+
 
 // Middleware
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(morgan())
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URL, {

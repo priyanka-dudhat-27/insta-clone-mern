@@ -6,6 +6,7 @@ const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken');
 const requireLogin = require('../middlewares/requireLogin');
 
+
 routs.post('/signup',async(req,res)=>{
     try {
         const { email,name,username,password } = req.body; // Extract all fields from request body
